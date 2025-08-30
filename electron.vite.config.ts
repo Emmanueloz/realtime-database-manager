@@ -1,6 +1,7 @@
-import { defineConfig } from "electron-vite";
+import { defineConfig, externalizeDepsPlugin } from "electron-vite";
 import { resolve } from "path";
 import react from "@vitejs/plugin-react-swc";
+import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
   main: {
@@ -10,6 +11,7 @@ export default defineConfig({
         input: resolve(__dirname, "electron/main.ts"),
       },
     },
+    plugins: [externalizeDepsPlugin()],
   },
   preload: {
     build: {
@@ -18,6 +20,7 @@ export default defineConfig({
         input: resolve(__dirname, "electron/preload.ts"),
       },
     },
+    plugins: [externalizeDepsPlugin()],
   },
   renderer: {
     // tu index.html está en la raíz del repo
@@ -29,6 +32,6 @@ export default defineConfig({
         input: resolve(__dirname, "index.html"),
       },
     },
-    plugins: [react()],
+    plugins: [react(), tailwindcss()],
   },
 });
